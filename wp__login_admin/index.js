@@ -11,7 +11,7 @@ module.exports = {
 
       return({
         items: [
-          { destinationFile: "RBTM_login_admin.php", sourceTemplateFile: "index.template"    },
+          { destinationFile: "custom-wp-login.php", sourceTemplateFile: "index.template"    },
           { destinationFile: "css/login-style.css", sourceContentFile: "css/login-style.css" },
           { destinationFile: "css/login-style24.css", sourceContentFile: "css/login-style24.css" }
         ]

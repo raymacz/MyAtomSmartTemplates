@@ -11,7 +11,7 @@ module.exports = {
 
       return({
         items: [
-          { destinationFile: "RBTM_cron_admin.php",           sourceTemplateFile: "index.template"    }
+          { destinationFile: "JW_Cron.php",           sourceTemplateFile: "index.template"    }
         ]
       });
 

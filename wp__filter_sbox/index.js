@@ -1,7 +1,7 @@
 
 module.exports = {
 
-    name: "Wordpress Widget Twitter",
+    name: "Wordpress Filter Sandbox",
 
     directory: false,
 
@@ -11,7 +11,7 @@ module.exports = {
 
       return({
         items: [
-          { destinationFile: "jw_twitter_widget.php",           sourceTemplateFile: "index.template"    }
+          { destinationFile: "RBTM_filter_sbox.php",           sourceTemplateFile: "index.template"    }
         ]
       });
 
