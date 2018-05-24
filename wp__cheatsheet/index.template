@@ -15,8 +15,49 @@
 */
 
 // https://developer.wordpress.org/reference/hooks/pre_get_posts/
+
+// https://wordpress.stackexchange.com/questions/17394/how-to-know-what-functions-are-hooked-to-an-action-filter
+add_action( 'wp_footer', function() {
+    global $wp_filter;
+    echo "<pre>" . var_dump( $wp_filter['wp_head'] ) . "</pre>";
+    // echo "<pre>" . print_r($wp_filter, true) . "</pre>";
+});
+
+
+locate_template( $template_names, $load = false, $require_once = true );
+wp_die( $message = '', $title = '', $args = array() ); //error message
+
+wp_create_user( $username, $password, $email = '' );
+count_users( $strategy = 'time' );
+wp_get_user_contact_methods( $user = null );
+get_role($role);
+wp_get_current_user();
+// check default-filters.php to understand how filters work
+wp_authenticate( $username, $password );
+wp_authenticate_username_password( $user, $username, $password );
+wp_authenticate_email_password();
+
+wp_filter_kses( $data ); //formatting
+
+__return_empty_string();
+__return_false();
+
+paginate_links( $args = '' );
+get_pagenum_link( $pagenum = 1, $escape = true );
+
+has_post_thumbnail( $post_id = null );
+get_the_post_thumbnail( $post_id = null, $size = 'post-thumbnail', $attr = '' );
+add_image_size( $name, $width = 0, $height = 0, $crop = false );
+
+get_option( $option, $default = false );
+update_option( $option, $value, $autoload = null ); // check http://site1.net/wp-admin/options.php
+
+register_nav_menu( $location, $description );
+wp_add_dashboard_widget( $widget_id, $widget_name, $callback);
+
 wp_reset_postdata();
 wp_reset_query();
+get_query_var( $var, $default = '' );
 
 add_meta_box( $id, $title, $callback, $screen = null);
 get_post_meta( $post_id, $key = '', $single = false );
@@ -32,6 +73,8 @@ register_taxonomy( $taxonomy, $object_type, $args = array() );
 register_post_type( $post_type, $args = array() );
 
 add_shortcode( $tag, $func );
+shortcode_atts( $pairs, $atts, $shortcode = '' );
+do_shortcode( $content );
 
 $loop = new WP_Query(	array('post_type' => 'rbtm_movie','order_by' => 'title')	);
 if($loop->have_posts()) {
@@ -80,6 +123,8 @@ comment_form(); // Goes in comments.php and comments-popup.php, directly before 
 
 // /%postname%/ // Custom permalinks
 
+current_user_can( $capability );
+current_user_can_for_blog( $blog_id, $capability );
 
 _e( $text, $domain = 'default' ); // Prints out message
 wp_list_cats(); // Displays the categories
@@ -219,6 +264,7 @@ is_day(); // When a daily archive is being displayed.
 is_time(); // When an hourly, "minutely", or "secondly" archive is being displayed.
 is_archive(); // When any type of Archive page is being displayed. Category, Tag, Author and Date based pages are all types of Archives.
 is_main_query();
+is_feed( $feeds = '' );
 
 
 FUNCTION bloginfo($param) {}; ?>
