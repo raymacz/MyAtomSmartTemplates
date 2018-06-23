@@ -45,6 +45,8 @@ __return_false();
 paginate_links( $args = '' );
 get_pagenum_link( $pagenum = 1, $escape = true );
 
+get_page_link( $post = false, $leavename = false, $sample = false );
+
 has_post_thumbnail( $post_id = null );
 get_the_post_thumbnail( $post_id = null, $size = 'post-thumbnail', $attr = '' );
 add_image_size( $name, $width = 0, $height = 0, $crop = false );
@@ -55,9 +57,12 @@ update_option( $option, $value, $autoload = null ); // check http://site1.net/wp
 register_nav_menu( $location, $description );
 wp_add_dashboard_widget( $widget_id, $widget_name, $callback);
 
+get_posts( $args = null );
+get_pages( $args = array());
+
 wp_reset_postdata();
 wp_reset_query();
-get_query_var( $var, $default = '' );
+get_query_var( $var, $default = '' ); // https://codex.wordpress.org/WordPress_Query_Vars
 
 add_meta_box( $id, $title, $callback, $screen = null);
 get_post_meta( $post_id, $key = '', $single = false );
@@ -353,11 +358,16 @@ bloginfo('charset'); ?>" />
 
 <?php get_header(); // header.php ?>
 <?php if (have_posts()) : ?>
+<?php current_theme_supports( $feature )?>
+<?php $wrapper_tag = ( is_single( get_the_ID() ) ) ? ( 'div' ) : ( 'aside' ); ?>
+   <<?php echo tag_escape( $wrapper_tag ); //open html tag for content-{name}.php>?> >
+   </<?php echo tag_escape( $wrapper_tag ); //close  html tag for content-{name}.php>?>>
 <?php while (have_posts()) : the_post(); // the loop ?>
-<div class="post" id="post-<?php the_ID(); ?>">
+<div <?php post_class( array('left','post') ); ?> id="post-<?php the_ID(); ?>" >
 <h2><a href="<?php the_permalink() ?>" rel="bookmark" title="Permanent Link to
 <?php the_title_attribute(); ?>"><?php the_title(); ?></a></h2>
 <?php the_time('F jS, Y') ?> by <?php the_author() ?>
+<?php get_theme_mod('length_setting'); ?>
 <?php the_content('Read the rest of this entry &raquo;'); ?>
 Post Tags: <?php the_tags(' ', ', ', '<br />'); ?>
 Posted in <?php the_category(', ') ?>
