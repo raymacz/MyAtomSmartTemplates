@@ -22,14 +22,21 @@ add_action( 'wp_footer', function() {
     echo "<pre>" . var_dump( $wp_filter['wp_head'] ) . "</pre>";
     // echo "<pre>" . print_r($wp_filter, true) . "</pre>";
 });
+add_filter( $tag, $function_to_add, $priority = 10, $accepted_args = 1 );
+//note: the higher the $priority, the higher the chance that it will override the existing add_filter/add_action from the theme
+//note: however, the least likely it will be overridden by another add_filter/add_action for future developement.
 
 
 locate_template( $template_names, $load = false, $require_once = true );
 wp_die( $message = '', $title = '', $args = array() ); //error message
 
 wp_create_user( $username, $password, $email = '' );
+
 count_users( $strategy = 'time' );
 wp_get_user_contact_methods( $user = null );
+get_userdata( $user_id );
+get_users( $args = array() );
+get_user_by( $field, $value );
 get_role($role);
 wp_get_current_user();
 // check default-filters.php to understand how filters work
@@ -44,12 +51,14 @@ __return_false();
 
 paginate_links( $args = '' );
 get_pagenum_link( $pagenum = 1, $escape = true );
-
+get_page_by_path($slug);
 get_page_link( $post = false, $leavename = false, $sample = false );
 
 has_post_thumbnail( $post_id = null );
 get_the_post_thumbnail( $post_id = null, $size = 'post-thumbnail', $attr = '' );
+get_post_field( $field, $post, $context = 'display' );
 add_image_size( $name, $width = 0, $height = 0, $crop = false );
+
 
 get_option( $option, $default = false );
 update_option( $option, $value, $autoload = null ); // check http://site1.net/wp-admin/options.php
@@ -57,9 +66,12 @@ update_option( $option, $value, $autoload = null ); // check http://site1.net/wp
 register_nav_menu( $location, $description );
 wp_add_dashboard_widget( $widget_id, $widget_name, $callback);
 
-get_posts( $args = null );
+get_post( $post = null, $output = OBJECT, $filter = 'raw' ); //deprecated
+get_posts( $args = null );  // not recommended by Nacin - use wp_reset_query();
 get_pages( $args = array());
 
+wp_script_is( $handle, $list = 'enqueued' ); // check if script is enqueued // better use wp_head hook
+wp_style_is( $handle, $list = 'enqueued' ); // better use wp_head hook // var_dump(wp_style_is( 'nova-font'));
 wp_reset_postdata();
 wp_reset_query();
 get_query_var( $var, $default = '' ); // https://codex.wordpress.org/WordPress_Query_Vars
@@ -74,8 +86,12 @@ admin_url( $path = '', $scheme = 'admin' );
 
 esc_attr( $text );
 
+get_terms($args);
+get_term_link($trm->term_id); // get taxonomy link / URL / address
+
 register_taxonomy( $taxonomy, $object_type, $args = array() );
 register_post_type( $post_type, $args = array() );
+get_post_type_object(get_post_type( $post = null ));
 
 add_shortcode( $tag, $func );
 shortcode_atts( $pairs, $atts, $shortcode = '' );
@@ -226,6 +242,8 @@ in_category(); // http://codex.wordpress.org/Template_Tags/in_category
 get_category_parents(); // http://codex.wordpress.org/Template_Tags/get_category_parents
 get_the_category(); // http://codex.wordpress.org/Template_Tags/get_the_category
 get_category_link(); // http://codex.wordpress.org/Function_Reference/get_category_link
+require_once(get_stylesheet_directory() . '/includes/myfunc/specific-tpl-func.php')  ; // used for child theme
+require_once(get_template_directory(). '/includes/myfunc/specific-tpl-func.php'); // used in parent theme
 
 // Author TAGS
 the_author(); // Displays the author of the post http://codex.wordpress.org/Template_Tags/the_author
